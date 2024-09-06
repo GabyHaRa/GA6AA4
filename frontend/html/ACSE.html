@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ACSE - Plataforma</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        /* Estilos para el encabezado */
+        header {
+            background-color: #4ab4ec;
+            color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        header nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        header nav li {
+            margin-right: 20px;
+            position: relative;
+        }
+
+        header nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px;
+        }
+
+        header nav li:hover > ul {
+            display: block;
+        }
+
+        header nav ul ul {
+            display: none;
+            position: absolute;
+            background-color: #4ab4ec;
+            width: 200px;
+            z-index: 1;
+        }
+
+        header nav ul ul li {
+            display: block;
+            margin: 0;
+        }
+
+        header nav ul ul a {
+            color: #ffffff;
+        }
+
+        header input[type="text"] {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        /* Estilos para la barra lateral */
+        aside {
+            background-color: #ffffff;
+            padding: 20px;
+            width: 200px;
+            float: left;
+        }
+
+        aside h2 {
+            margin-top: 0;
+            color: #0077b6;
+        }
+
+        aside ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        aside li {
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        /* Estilos para el contenido principal */
+        main {
+            margin-left: 220px;
+            padding: 20px;
+        }
+
+        main img {
+            max-width: 100%;
+            margin-bottom: 20px;
+        }
+
+        /* Estilos para el calendario */
+        #calendar {
+            background-color: #ffffff;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(98, 158, 247, 0.1);
+        }
+
+        /* Estilos para las interfaces independientes */
+        .interface {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .interface-content {
+            background-color: #ffffff;
+            margin: 5% auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 800px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .interface-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #4ab4ec;
+        }
+
+        .interface-close {
+            cursor: pointer;
+            font-size: 24px;
+        }
+
+        .interface-search {
+            margin-bottom: 20px;
+        }
+
+        .interface-search input {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #4ab4ec;
+            border-radius: 5px;
+        }
+
+        .interface-year {
+            margin-bottom: 20px;
+        }
+
+        .interface-year select {
+            padding: 5px;
+            border: 1px solid #4ab4ec;
+            border-radius: 5px;
+        }
+
+        .interface-image-upload {
+            margin-top: 20px;
+        }
+
+        .interface-image-upload input[type="file"] {
+            display: none;
+        }
+
+        .interface-image-upload label {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4ab4ec;
+            color: #ffffff;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Estilos para la interfaz de usuario */
+        #userInterface {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0077b6, #4ab4ec);
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .login-form {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 40px;
+            width: 300px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .login-form h2 {
+            margin-bottom: 20px;
+            color: #0077b6;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #4ab4ec;
+            border-radius: 5px;
+        }
+
+        .login-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4ab4ec;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .floating-acse {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.3);
+            user-select: none;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ACSE</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Áreas</a>
+                    <ul>
+                        <li><a href="#" onclick="openInterface('Contabilidad')">Contabilidad</a></li>
+                        <li><a href="#" onclick="openInterface('Tesorería')">Tesorería</a></li>
+                        <li><a href="#" onclick="openInterface('Recursos Humanos')">Recursos Humanos</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Archivo</a>
+                    <ul>
+                        <li><a href="#" onclick="openInterface('Facturas')">Facturas</a></li>
+                        <li><a href="#" onclick="openInterface('Causaciones')">Causaciones</a></li>
+                        <li><a href="#" onclick="openInterface('Egresos')">Egresos</a></li>
+                        <li><a href="#" onclick="openInterface('Recibos de caja')">Recibos de caja</a></li>
+                        <li><a href="#" onclick="openInterface('Pagos de aportes')">Pagos de aportes</a></li>
+                        <li><a href="#" onclick="openInterface('Liquidaciones')">Liquidaciones</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Servicios</a>
+                    <ul>
+                        <li><a href="#" onclick="openInterface('Archivo')">Archivo</a></li>
+                        <li><a href="#" onclick="openInterface('Notificaciones')">Notificaciones</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">¿Quiénes somos?</a></li>
+                <li><a href="#">Contáctenos</a></li>
+            </ul>
+        </nav>
+        <input type="text" placeholder="Buscar">
+    </header>
+
+    <aside>
+        <h2>INFORMACIÓN</h2>
+        <ul>
+            <li onclick="openYearSelector()">Año</li>
+            <li onclick="openDocumentSearch()">Tipo de documento</li>
+            <li onclick="window.open('https://www.dian.gov.co/Paginas/Inicio.aspx', '_blank')">Noticias</li>
+            <li onclick="openUserInterface()">Usuarios</li>
+        </ul>
+        <div id="calendar"></div>
+    </aside>
+
+    <main id="mainContent">
+        <img src="/imagenes/fondo1.jpg" alt="fondo digitando" style="width: 600px;height: 600px;">
+        <img src="/imagenes/dian1.webp" alt="logo dian" style="width: 600px;height: 600px;">
+    </main>
+
+    <!-- Interfaces independientes -->
+    <div id="interface" class="interface">
+        <div class="interface-content">
+            <div class="interface-header">
+                <h2>ACSE - <span id="interfaceTitle"></span></h2>
+                <span class="interface-close" onclick="closeInterface()">&times;</span>
+            </div>
+            <div class="interface-year">
+                <select id="yearSelect" onchange="loadYearContent()">
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                    <option value="2020">2020</option>
+                </select>
+            </div>
+            <div class="interface-search">
+                <input type="text" id="searchInput" placeholder="Buscar..." onkeyup="searchInterface()">
+            </div>
+            <div id="interfaceContent"></div>
+            <div class="interface-image-upload">
+                <label for="imageUpload">Agregar imagen</label>
+                <input type="file" id="imageUpload" accept="image/*" onchange="handleImageUpload(event)">
+            </div>
+        </div>
+    </div>
+
+    <!-- Interfaz de usuario -->
+    <div id="userInterface">
+        <div class="login-form">
+            <h2>ACSE</h2>
+            <input type="text" placeholder="Usuario">
+            <input type="password" placeholder="Contraseña">
+            <button onclick="closeUserInterface()">Iniciar sesión</button>
+        </div>
+    </div>
+
+    <script>
+        // Código JavaScript para actualizar el calendario automáticamente
+        var calendar = document.getElementById('calendar');
+        var currentDate = new Date();
+        var month = currentDate.toLocaleString('default', { month: 'long' });
+        var year = currentDate.getFullYear();
+        calendar.innerHTML = month + ' ' + year;
+
+        // Funciones para manejar las interfaces independientes
+        function openInterface(title) {
+            document.getElementById('interface').style.display = 'block';
+            document.getElementById('interfaceTitle').textContent = title;
+            loadYearContent();
+        }
+
+        function closeInterface() {
+            document.getElementById('interface').style.display = 'none';
+        }
+
+        function searchInterface() {
+            var input, filter, content, p, i, txtValue;
+            input = document.getElementById('searchInput');
+            filter = input.value.toUpperCase();
+            content = document.getElementById('interfaceContent');
+            p = content.getElementsByTagName('p');
+
+            for (i = 0; i < p.length; i++) {
+                txtValue = p[i].textContent || p[i].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    p[i].style.display = "";
+                } else {
+                    p[i].style.display = "none";
+                }
+            }
+        }
+
+        function handleImageUpload(event) {
+            var file = event.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.maxWidth = '100%';
+                document.getElementById('interfaceContent').appendChild(img);
+            }
+            reader.readAsDataURL(file);
+        }
+
+        function openYearSelector() {
+            openInterface('Año');
+        }
+
+        function loadYearContent() {
+            var year = document.getElementById('yearSelect').value;
+            var title = document.getElementById('interfaceTitle').textContent;
+            document.getElementById('interfaceContent').innerHTML = `<p>Contenido del año ${year} para ${title}</p>`;
+        }
+
+        function openDocumentSearch() {
+            openInterface('Tipo de documento');
+            document.getElementById('interfaceContent').innerHTML = `
+                <input type="text" placeholder="Buscar documentos" onkeyup="searchDocuments(this.value)">
+                <div id="documentResults"></div>
+            `;
+        }
+
+        function searchDocuments(query) {
+            // Aquí iría la lógica para buscar documentos
+            document.getElementById('documentResults').innerHTML = `<p>Resultados de búsqueda para: ${query}</p>`;
+        }
+
+        function openUserInterface() {
+            document.getElementById('userInterface').style.display = 'block';
+            createFloatingACSE();
+        }
+
+        function closeUserInterface() {
+            document.getElementById('userInterface').style.display = 'none';
+        }
+
+        function createFloatingACSE() {
+            var userInterface = document.getElementById('userInterface');
+            for (var i = 0; i < 20; i++) {
+                var acse = document.createElement('div');
+                acse.className = 'floating-acse';
+                acse.style.left = Math.random() * 100 + '%';
+                acse.style.top = Math.random() * 100 + '%';
+                acse.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                acse.textContent = 'ACSE';
+                userInterface.appendChild(acse);
+                animateACSE(acse);
+            }
+        }
+
+        function animateACSE(element) {
+            var x = Math.random() * 2 - 1;
+            var y = Math.random() * 2 - 1;
+            setInterval(function() {
+                var left = parseFloat(element.style.left);
+                var top = parseFloat(element.style.top);
+                element.style.left = (left + x) + '%';
+                element.style.top = (top + y) + '%';
+                if (left < 0 || left > 100) x = -x;
+                if (top < 0 || top > 100) y = -y;
+            }, 50);
+        }
+    </script>
+
+<head>
+    <title>ACSE - Plataforma</title>
+    <style>
+        /* ... (previous styles remain unchanged) ... */
+
+        /* Updated styles for the full calendar */
+        #full-calendar {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: black;
+            color: rgba(179, 175, 175, 0.938);
+            padding: 10px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            z-index: 1000;
+            width: 300px;
+        }
+
+        #full-calendar table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #full-calendar th, #full-calendar td {
+            text-align: center;
+            padding: 5px;
+        }
+
+        #full-calendar th {
+            font-weight: bold;
+        }
+
+        #full-calendar .current-day {
+            background-color: rgba(255, 0, 0, 0.3);
+        }
+
+        #full-calendar .holiday {
+            background-color: rgba(255, 255, 0, 0.3);
+            font-weight: bold;
+        }
+
+        #full-calendar .calendar-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        #full-calendar .calendar-nav button {
+            background-color: #4ab4ec;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        #full-calendar .calendar-nav button:hover {
+            background-color: #0077b6;
+        }
+    </style>
+</head>
+<body>
+    <!-- ... (previous HTML content remains unchanged) ... -->
+
+    <!-- Full calendar div -->
+    <div id="full-calendar"></div>
+
+    <script>
+        // ... (previous JavaScript functions remain unchanged) ...
+
+        // Function to check if a date is a holiday (remains unchanged)
+        function isHoliday(year, month, day) {
+            // ... (holiday list remains unchanged) ...
+        }
+
+        // Global variables to keep track of the displayed month and year
+        let currentDisplayMonth;
+        let currentDisplayYear;
+
+        // Updated function to create and update the full calendar
+        function updateFullCalendar(month, year) {
+            const calendarElement = document.getElementById('full-calendar');
+            const currentDate = new Date();
+            
+            currentDisplayMonth = month !== undefined ? month : currentDate.getMonth();
+            currentDisplayYear = year !== undefined ? year : currentDate.getFullYear();
+
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"];
+
+            let calendarHTML = `
+                <div class="calendar-nav">
+                    <button onclick="changeMonth(-1)">&#10094;</button>
+                    <h3>${monthNames[currentDisplayMonth]} ${currentDisplayYear}</h3>
+                    <button onclick="changeMonth(1)">&#10095;</button>
+                </div>
+                <table>
+                    <tr>
+                        <th>Sun</th>
+                        <th>Mon</th>
+                        <th>Tue</th>
+                        <th>Wed</th>
+                        <th>Thu</th>
+                        <th>Fri</th>
+                        <th>Sat</th>
+                    </tr>`;
+
+            const firstDay = new Date(currentDisplayYear, currentDisplayMonth, 1).getDay();
+            const daysInMonth = new Date(currentDisplayYear, currentDisplayMonth + 1, 0).getDate();
+
+            let date = 1;
+            for (let i = 0; i < 6; i++) {
+                calendarHTML += "<tr>";
+                for (let j = 0; j < 7; j++) {
+                    if (i === 0 && j < firstDay) {
+                        calendarHTML += "<td></td>";
+                    } else if (date > daysInMonth) {
+                        break;
+                    } else {
+                        let className = [];
+                        if (date === currentDate.getDate() && currentDisplayMonth === currentDate.getMonth() && currentDisplayYear === currentDate.getFullYear()) {
+                            className.push('current-day');
+                        }
+                        if (isHoliday(currentDisplayYear, currentDisplayMonth, date)) {
+                            className.push('holiday');
+                        }
+                        calendarHTML += `<td class="${className.join(' ')}">${date}</td>`;
+                        date++;
+                    }
+                }
+                calendarHTML += "</tr>";
+                if (date > daysInMonth) {
+                    break;
+                }
+            }
+
+            calendarHTML += "</table>";
+            calendarElement.innerHTML = calendarHTML;
+        }
+
+        // Function to change the month
+        function changeMonth(delta) {
+            currentDisplayMonth += delta;
+            if (currentDisplayMonth > 11) {
+                currentDisplayMonth = 0;
+                currentDisplayYear++;
+            } else if (currentDisplayMonth < 0) {
+                currentDisplayMonth = 11;
+                currentDisplayYear--;
+            }
+            updateFullCalendar(currentDisplayMonth, currentDisplayYear);
+        }
+
+        // Call updateFullCalendar on page load
+        updateFullCalendar();
+
+        // Update the calendar every day at midnight
+        setInterval(() => {
+            const now = new Date();
+            if (now.getHours() === 0 && now.getMinutes() === 0 && now.getSeconds() === 0) {
+                updateFullCalendar();
+            }
+        }, 1000); // Check every second
+
+        // ... (rest of the JavaScript code remains unchanged) ...
+    </script>
+</body>
+</html>

@@ -8,26 +8,33 @@ Component({
   styleUrl: './usuario.component.css'
 })
 
-interface Usuario {
+interface usuarioInterfaz {
   nombre: string;
   apellido: string;
   identificación: number;
   correoElectrónico: string;
+  IsLoggedIn: boolean;
 }
 
 export class UsuarioComponent {
-  usuario : Usuario[] = [
+  usuarios : usuarioInterfaz[] = [
     {
       nombre : 'Pepito' ,
       apellido : 'Perez',
       identificación : 222,
-      correoElectrónico : 'pepito@perez'
+      correoElectrónico : 'pepito@perez',
+      IsLoggedIn : true
     },
     {
       nombre : 'Pepa',
       apellido: 'Pedraza',
       identificación : 111,
-      correoElectrónico : 'pepito@perez'
+      correoElectrónico : 'pepita@pedraza',
+      IsLoggedIn : true
     }
   ];
+
+  greet(){
+    alert("Hola");
+  }
 }

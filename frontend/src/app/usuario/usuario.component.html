@@ -1,1 +1,17 @@
-<p>usuario works!</p>
+<!--<p>usuario works!</p>
+<img 
+(click)="greet()"
+src="https://github.com/GabyHaRa.png" 
+alt="photo"></img>-->
+<section>
+    @if (isLoggedIn) {
+        <p>Bienvenido, {{ nombre }}</p>
+        <img
+        (click)="greet()"
+        alt="photo"
+        src="https://github.com/GabyHaRa.png"
+        />
+    } @else {
+        <p>Iniciar sesión</p>
+    }
+</section>
