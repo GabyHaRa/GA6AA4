@@ -16,7 +16,7 @@ interface usuarioInterfaz {
   IsLoggedIn: boolean;
 }
 
-export class UsuarioComponent {
+/*export class UsuarioComponent {
   usuarios : usuarioInterfaz[] = [
     {
       nombre : 'Pepito' ,
@@ -37,4 +37,4 @@ export class UsuarioComponent {
   greet(){
     alert("Hola");
   }
-}
+}*/
