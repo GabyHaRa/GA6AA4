@@ -34,7 +34,7 @@ app.use('/api',puntajeRutes);
 //})
 
 //conexion base de datos
-// PASS=KL123456789 letra mayuscula.
+ //PASS=KL123456789 letra mayuscula.
 mongoose.connect(process.env.BDMONGO_URI)
 .then(() => console.log("Conexión establecida."))
 .catch((error)=> console.log(error));
