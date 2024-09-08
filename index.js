@@ -1,6 +1,5 @@
 const express = require ('express');
 const app = express();
-const cors = require( 'cors' );
 const mongoose = require ('mongoose');
 // El puerto es decision de cada usuario en este caso utilizo el puerto 8000
 const port = process.env.PORT || 8000;

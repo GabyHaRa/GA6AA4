@@ -1,0 +1,31 @@
+###
+POST http://localhost:9000/api/users HTTP/1.1
+content-type: application/json
+
+{
+    "nombre": "Pedro",
+    "apellido": "Perez",
+    "identificacion":987654321,
+    "correoElectronico":"www.www"
+}
+###
+GET http://localhost:9000/api/users HTTP/1.1
+content-type: application/json
+{
+    
+}
+###
+GET http://localhost:9000/api/users HTTP/1.1
+
+###
+PUT  http://localhost:9000/api/users HTTP/1.1
+content-type: application/json
+
+{
+    "nombre": "Pedro",
+    "apellido": "Perez",
+    "identificacion":987654321,
+    "correoElectronico":"www.www"
+}
+###
+DELETE  http://localhost:9000/api/users HTTP/1.1
