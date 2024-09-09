@@ -3,27 +3,29 @@ POST http://localhost:9000/api/users HTTP/1.1
 content-type: application/json
 
 {
-    "nombre": "Pedro",
-    "apellido": "Perez",
-    "identificacion":987654321,
-    "correoElectronico":"www.www"
+    "nombre": "Pepa",
+    "apellido": "Pig",
+    "identificacion":1111111111,
+    "correoElectronico":"pepa@pig"
 }
 ###
 GET http://localhost:9000/api/users HTTP/1.1
 content-type: application/json
 
 ###
-GET http://localhost:9000/api/users HTTP/1.1
+GET http://localhost:9000/api/users/identificacion/1111111111 HTTP/1.1
+content-type: application/json
 
 ###
-PUT  http://localhost:9000/api/users HTTP/1.1
-content-type: application/json
+PUT http://localhost:9000/api/users/identificacion/1111111111
+Content-Type: application/json
 
 {
-    "nombre": "Pedro",
-    "apellido": "Perez",
-    "identificacion":987654321,
-    "correoElectronico":"www.www"
+    "nombre": "Peppa",
+    "apellido": "Pig",
+    "identificacion": 1111111111,
+    "correoElectronico": "pepa@pig"
 }
+
 ###
 DELETE  http://localhost:9000/api/users HTTP/1.1
