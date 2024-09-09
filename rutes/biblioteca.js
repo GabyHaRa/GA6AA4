@@ -49,7 +49,7 @@ module.exports = router
 */
 const express = require('express');
 const router = express.Router();
-const user = require('../models/Biblioteca'); 
+const biblioteca = require('../models/Biblioteca'); 
 
 //Ruta para crear un usuario
 router.post('/bibliotecas', async (req, res) => {

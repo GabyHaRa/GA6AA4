@@ -35,11 +35,11 @@ POST http://localhost:9000/api/bibliotecas HTTP/1.1
 content-type: application/json
 
 {
+    "titulo": "Probando, probando",
+    "fechaCreacion": "2024-09-09",
+    "fechaVencimiento": "2025-01-31",
+    "valorTotal": 1000500,
     "tipo": "IVA",
-    "etiqueta": "",
-    "fechaCreacion":1111111111,
-    "horaCreacion":"pepa@pig",
-    "fechaVencimiento":1111111111,
-    "horaVencimiento":"pepa@pig",
-    "comentario":"nn"
+    "estado": "creados por mí",
+    "formato":"imágen"
 }
