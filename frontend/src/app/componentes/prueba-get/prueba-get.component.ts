@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
   templateUrl: './prueba-get.component.html',
   styleUrl: './prueba-get.component.css'
 })
+
 export class PruebaGetComponent {
 
 }
