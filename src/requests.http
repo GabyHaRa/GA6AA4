@@ -28,4 +28,18 @@ Content-Type: application/json
 }
 
 ###
-DELETE  http://localhost:9000/api/users HTTP/1.1
+DELETE  http://localhost:9000/api/users/identificacion/1111111111
+
+###
+POST http://localhost:9000/api/bibliotecas HTTP/1.1
+content-type: application/json
+
+{
+    "titulo": "Probando, probando",
+    "fechaCreacion": "2024-09-09",
+    "fechaVencimiento": "2025-01-31",
+    "valorTotal": 1000500,
+    "tipo": "IVA",
+    "estado": "creados por mí",
+    "formato":"imágen"
+}

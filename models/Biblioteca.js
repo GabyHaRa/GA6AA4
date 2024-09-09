@@ -1,34 +1,33 @@
 const mongoose = require("mongoose");
 const bibliotecaSchema = mongoose.Schema({
-    tipo: {
+    titulo: {
         type: String,
         required: true
-    },
-    etiqueta: {
-        type: String,
-        required: false
     },
     fechaCreacion: {
         type: Date,
-        required: true
-    },
-    horaCreacion: {
-        type: String,
         required: true
     },
     fechaVencimiento: {
         type: Date,
         required: true
     },
-    horaVencimiento: {
+    valorTotal: {
+        type: Number,
+        required: true
+    },
+    tipo: {
         type: String,
         required: true
     },
-    comentario: {
+    estado: {
         type: String,
-        required: false
+        required: true
+    },
+    formato: {
+        type: String,
+        required: true
     }
-
 
 })
 

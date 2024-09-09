@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const calendarioSchema = require("../models/calendario");
+const calendarioSchema = require("../models/Calendario");
 
 // crear calendario.
 router.post('/calendario', (req, res) => {
