@@ -28,4 +28,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE  http://localhost:9000/api/users HTTP/1.1
+DELETE  http://localhost:9000/api/users/identificacion/1111111111

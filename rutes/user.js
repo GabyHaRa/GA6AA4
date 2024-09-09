@@ -148,7 +148,7 @@ router.put('/users/identificacion/:identificacion', async (req, res) => {
 // Ruta para eliminar un usuario por identificación
 router.delete('/users/identificacion/:identificacion', async (req, res) => {
     try {
-      const user = await User.findOneAndDelete({ identificacion: req.params.identificacion });
+      const user = await user.deleteOne({ identificacion: req.params.identificacion });
       if (!user) {
         return res.status(404).json({ message: 'Usuario no encontrado' });
       }
