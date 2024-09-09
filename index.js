@@ -1,7 +1,7 @@
 const express = require ('express');
 const app = express();
 const mongoose = require ('mongoose');
-// El puerto es decision de cada usuario en este caso utilizo el puerto 8000
+// El puerto es decision de cada usuario en este caso utilizo el puerto 9000
 const port = process.env.PORT || 9000;
 require("dotenv").config();
 //Importar ruta de usuario 

@@ -1,4 +1,4 @@
-const express = require('express');
+/*const express = require('express');
 const router = express.Router();
 const userSchema = require("../models/user");
 
@@ -45,5 +45,21 @@ router.delete('/users/:id', (req, res) => {
 });
 
 
-module.exports = router
+module.exports = router*/
+const express = require('express');
+const router = express.Router();
+const user = require('../models/User'); // Asegúrate de que la ruta es correcta
 
+// Ruta para obtener todos los usuarios
+router.get('/users', async (req, res) => {
+  try {
+    const users = await user.find();
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Otras rutas (POST, PUT, DELETE) aquí
+
+module.exports = router;
