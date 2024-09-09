@@ -67,7 +67,7 @@ router.post('/bibliotecas', async (req, res) => {
 });
 
 // Ruta para obtener todos los usuarios
-router.get('/users', async (req, res) => {
+router.get('/bibliotecas', async (req, res) => {
   try {
     const users = await user.find();
     res.json(users);
