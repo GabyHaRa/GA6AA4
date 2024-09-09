@@ -1,0 +1,7 @@
+body{
+    background-image:url(/frontend/public/assets/negro.jpg) ;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
