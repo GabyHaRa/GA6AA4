@@ -3,7 +3,7 @@ POST http://localhost:9000/api/users HTTP/1.1
 content-type: application/json
 
 {
-    "nombre": "Pepa",
+    "nombre": "Pepa7",
     "apellido": "Pig",
     "identificacion":1111111111,
     "correoElectronico":"pepa@pig"
