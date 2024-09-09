@@ -8,7 +8,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="usuario.component.css">
     <style>
-
         .container {
             height: 100%;
             display: flex;
@@ -25,21 +24,25 @@
             width: 100px;
             height: 100px;
         }
-        .login-container {
+        .login-container, .register-container {
             max-width: 400px;
             width: 100%;
             padding: 20px;
             background-color: white;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
+            display: none;
         }
-        .login-header {
+        .login-container.active, .register-container.active {
+            display: block;
+        }
+        .login-header, .register-header {
             margin-bottom: 20px;
         }
         .title-container {
             text-align: right;
             max-width: 400px;
-            color: white; /* Texto blanco para el título y descripción */
+            color: white;
         }
         .title-container h1 {
             font-size: 36px;
@@ -50,6 +53,11 @@
             font-size: 16px;
             color: white;
         }
+        .toggle-link {
+            cursor: pointer;
+            color: #007bff;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -59,27 +67,66 @@
     </div>
 
     <div class="container">
-        <div class="login-container">
+        <div class="login-container active" id="loginContainer">
             <div class="login-header">
                 <h2>Iniciar Sesión</h2>
             </div>
-            <form>
+            <form id="loginForm">
                 <div class="mb-3">
-                    <label for="email" class="form-label">Correo Electrónico</label>
-                    <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+                    <label for="loginEmail" class="form-label">Correo Electrónico</label>
+                    <input type="email" class="form-control" id="loginEmail" placeholder="name@example.com" required>
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" id="password" placeholder="Contraseña" required>
+                    <label for="loginPassword" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="loginPassword" placeholder="Contraseña" required>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
                 <div class="text-center my-3">o</div>
                 <button type="button" class="btn btn-outline-primary w-100">
                     <i class="bi bi-facebook"></i> Iniciar Sesión con Facebook
                 </button>
+                <div class="text-center mt-3">
+                    <span class="toggle-link" onclick="toggleForms()">¿No tienes cuenta? Regístrate</span>
+                </div>
             </form>
         </div>
-        
+
+        <div class="register-container" id="registerContainer">
+            <div class="register-header">
+                <h2>Registrarse</h2>
+            </div>
+            <form id="registerForm">
+                <div class="mb-3">
+                    <label for="firstName" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="firstName" required>
+                </div>
+                <div class="mb-3">
+                    <label for="lastName" class="form-label">Apellido</label>
+                    <input type="text" class="form-control" id="lastName" required>
+                </div>
+                <div class="mb-3">
+                    <label for="idNumber" class="form-label">Identificación</label>
+                    <input type="text" class="form-control" id="idNumber" required>
+                </div>
+                <div class="mb-3">
+                    <label for="registerEmail" class="form-label">Correo Electrónico</label>
+                    <input type="email" class="form-control" id="registerEmail" required>
+                </div>
+                <div class="mb-3">
+                    <label for="registerUsername" class="form-label">Usuario</label>
+                    <input type="text" class="form-control" id="registerUsername" required>
+                </div>
+                <div class="mb-3">
+                    <label for="registerPassword" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="registerPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Registrarse</button>
+                <div class="text-center mt-3">
+                    <span class="toggle-link" onclick="toggleForms()">¿Ya tienes cuenta? Inicia sesión</span>
+                </div>
+            </form>
+        </div>
+
         <div class="title-container">
             <h1>ACSE</h1>
             <p>Un archivo digital contable es una colección de documentos y registros contables.
@@ -90,5 +137,52 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <script>
+        function toggleForms() {
+            document.getElementById('loginContainer').classList.toggle('active');
+            document.getElementById('registerContainer').classList.toggle('active');
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+
+            if (response.ok) {
+                window.location.href = '/pagina-destino.html'; // Redirige a la página deseada
+            } else {
+                alert('Error al iniciar sesión');
+            }
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const idNumber = document.getElementById('idNumber').value;
+            const email = document.getElementById('registerEmail').value;
+            const username = document.getElementById('registerUsername').value;
+            const password = document.getElementById('registerPassword').value;
+
+            const response = await fetch('/api/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ firstName, lastName, idNumber, email, username, password })
+            });
+
+            if (response.ok) {
+                alert('Registro exitoso');
+                toggleForms(); // Muestra el formulario de inicio de sesión
+            } else {
+                alert('Error al registrarse');
+            }
+        });
+    </script>
 </body>
 </html>
