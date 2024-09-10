@@ -10,6 +10,7 @@ content-type: application/json
     "usuario":"andrespv12",
     "contraseña":"123456789"
 }
+
 ###
 GET http://localhost:9000/api/users HTTP/1.1
 content-type: application/json
@@ -47,3 +48,28 @@ content-type: application/json
     "estado": "creados por mí",
     "formato":"imágen"
 }
+
+###
+GET http://localhost:9000/api/bibliotecas HTTP/1.1
+content-type: application/json
+
+###
+GET http://localhost:9000/api/bibliotecas/titulo/Probando, probando HTTP/1.1
+content-type: application/json
+
+###
+PUT http://localhost:9000/api/bibliotecas/titulo/Probando, probando
+Content-Type: application/json
+
+{
+    "titulo": "Probando, probando",
+    "fechaCreacion": "2024-09-09T19:33:27.000Z",
+    "fechaVencimiento": "2025-01-31T19:34:06.000Z",
+    "valorTotal": 1000500,
+    "tipo": "IVA",
+    "estado": "creados por mí",
+    "formato":"imágen"
+}
+
+###
+DELETE  http://localhost:9000/api/bibliotecas/titulo/Probando, probando
