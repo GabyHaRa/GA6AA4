@@ -51,7 +51,7 @@ const express = require('express');
 const router = express.Router();
 const biblioteca = require('../models/Biblioteca'); 
 
-//Ruta para crear un usuario
+//Ruta para crear una biblioteca
 router.post('/bibliotecas', async (req, res) => {
     try {
       // Crear una nueva instancia del modelo con los datos del cuerpo de la petición
@@ -66,58 +66,72 @@ router.post('/bibliotecas', async (req, res) => {
     }
 });
 
-// Ruta para obtener todos los usuarios
+// Ruta para obtener todas las bibliotecas
 router.get('/bibliotecas', async (req, res) => {
   try {
-    const users = await user.find();
-    res.json(users);
+    const bibliotecas = await biblioteca.find();
+    res.json(bibliotecas);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-// Ruta para obtener un usuario por identificación
-router.get('/users/identificacion/:identificacion', async (req, res) => {
+// Ruta para obtener una biblioteca por título
+router.get('/bibliotecas/titulo/:titulo', async (req, res) => {
     try {
-      const users = await user.findOne({ identificacion: req.params.identificacion });
-      if (!user) {
-        return res.status(404).json({ message: 'Usuario no encontrado' });
+      const bibliotecas = await biblioteca.findOne({ titulo: req.params.titulo });
+      if (!biblioteca) {
+        return res.status(404).json({ message: 'Biblioteca no encontrada' });
       }
-      res.json(users);
+      res.json(bibliotecas);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
 });
 
-// Ruta para actualizar un usuario por identificación
-router.put('/users/identificacion/:identificacion', async (req, res) => {
+// Ruta para actualizar una biblioteca por título
+router.put('/bibliotecas/titulo/:titulo', async (req, res) => {
     try {
         // Extrae los campos del cuerpo de la solicitud
-        const { nombre, apellido, identificacion, correoElectronico } = req.body;  
-        // Actualiza el usuario con la identificación proporcionada
-        const users = await user.updateOne(
-            // Filtro para identificar al usuario
-            { identificacion: req.params.identificacion },
-            { $set: { nombre, apellido, identificacion, correoElectronico }}, // Campos a actualizar
+        const { titulo, 
+          fechaCreacion, 
+          fechaVencimiento, 
+          valorTotal, 
+          tipo, 
+          estado, 
+          formato } = req.body;  
+        // Actualiza la biblioteca con el título proporcionado
+        const bibliotecas = await biblioteca.updateOne(
+            // Filtro para identificar a la biblioteca
+            { titulo: req.params.titulo },
+            // Campos a actualizar
+            { $set: { titulo, 
+              fechaCreacion, 
+              fechaVencimiento, 
+              valorTotal, 
+              tipo, 
+              estado, 
+              formato 
+            }},
             { new: true } // Opción para devolver el documento actualizado
         );
-        if (!user) {
-            return res.status(404).json({ message: 'Usuario no encontrado' });
+        if (!biblioteca) {
+            return res.status(404).json({ message: 'Biblioteca no encontrada' });
           }
-          res.json(users);
+          res.json(bibliotecas);
         } catch (error) {
           res.status(500).json({ message: error.message });
     }
 });
 
-// Ruta para eliminar un usuario por identificación
-router.delete('/users/identificacion/:identificacion', async (req, res) => {
+// Ruta para eliminar una biblioteca por título
+router.delete('/bibliotecas/titulo/:titulo', async (req, res) => {
     try {
-      const users = await user.deleteOne({ identificacion: req.params.identificacion });
-      if (!user) {
-        return res.status(404).json({ message: 'Usuario no encontrado' });
+      const bibliotecas = await biblioteca.deleteOne({ titulo: req.params.titulo });
+      if (!biblioteca) {
+        return res.status(404).json({ message: 'Biblioteca no encontrada' });
       }
-      res.json({ message: 'Usuario eliminado exitosamente' });
+      res.json({ message: 'Biblioteca eliminada exitosamente' });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

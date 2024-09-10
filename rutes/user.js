@@ -5,7 +5,6 @@ const user = require('../models/User');
 //Ruta para crear un usuario
 router.post('/users', async (req, res) => {
     try {
-
       const newUser = new user(req.body); // Crear una nueva instancia del modelo con los datos del cuerpo de la petición
       const savedUser = await newUser.save(); // Guardar el nuevo usuario en la base de datos
       res.status(201).json(savedUser); // Enviar el usuario guardado como respuesta
