@@ -49,8 +49,8 @@ router.post('/puntajes', async (req, res) => {
       const newPuntaje = new puntaje(req.body);
       // Guardar el nuevo puntaje en la base de datos
       const savedPuntaje = await newPuntaje.save();
-      // Enviar la biblioteca guardada como respuesta
-      res.status(201).json(savedCalendario);
+      // Enviar el puntaje guardado como respuesta
+      res.status(201).json(savedPuntaje);
     } catch (error) {
       // Manejar cualquier error
       res.status(500).json({ message: error.message });

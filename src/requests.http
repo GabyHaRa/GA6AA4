@@ -104,3 +104,11 @@ Content-Type: application/json
 
 ###
 DELETE  http://localhost:9000/api/calendarios/titulo/Vencimiento
+
+###
+POST http://localhost:9000/api/calendarios HTTP/1.1
+content-type: application/json
+
+{
+    "puntaje": "5"
+}
