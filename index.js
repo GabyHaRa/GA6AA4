@@ -28,10 +28,10 @@ app.use(express.json())
 app.use('/api',puntajeRutes);
 
 
-app.get("/",(req,res) => {
+/*app.get("/",(req,res) => {
     const {  } = req.params;
     res.send("API EN CONSTRUCCION")
-})
+})*/
 
 //conexion base de datos
  //PASS=KL123456789 letra mayuscula.

@@ -3,10 +3,12 @@ POST http://localhost:9000/api/users HTTP/1.1
 content-type: application/json
 
 {
-    "nombre": "Pepa7",
-    "apellido": "Pig",
-    "identificacion":1111111111,
-    "correoElectronico":"pepa@pig"
+    "nombre": "Pepa78",
+    "apellido": "Pig8",
+    "identificacion":222222,
+    "correoElectronico":"pepa22@pig",
+    "usuario":"andrespv12",
+    "contraseña":"123456789"
 }
 
 ###
@@ -22,10 +24,12 @@ PUT http://localhost:9000/api/users/identificacion/1111111111
 Content-Type: application/json
 
 {
-    "nombre": "Peppa",
-    "apellido": "Pig",
-    "identificacion": 1111111111,
-    "correoElectronico": "pepa@pig"
+    "nombre": "Pepa78",
+    "apellido": "Pig8",
+    "identificacion":222222,
+    "correoElectronico":"pepa22@pig",
+    "usuario":"andrespv12",
+    "contraseña":"123456789"
 }
 
 ###
