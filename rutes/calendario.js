@@ -1,137 +1,85 @@
-/*const express = require('express');
-const router = express.Router();
-const calendarioSchema = require("../models/Calendario");
-
-// crear calendario.
-router.post('/calendario', (req, res) => {
-    const calendario = calendarioSchema(req.body);
-    calendario
-        .save()
-        .then((data) => res.json(data))
-        .catch((error) => res.json({ message: error }));
-});
-// Obtener todos los registros en el calendario. 
-router.get('/calendario', (req, res) => {
-    const calendario = calendarioSchema(req.body);
-    calendario
-        .find()
-        .then((data) => res.json(data))
-        .catch((error) => res.json({ message: error }));
-});
-// Mostrar registro especifico.
-router.get('/calendario/:registro', (req, res) => {
-    const { registro } = req.params;
-    calendarioSchema
-        .finByRegistro(registro)
-        .then((data) => res.json(data))
-        .catch((error) => res.json({ message: error }));
-});
-// Actualizar registro. 
-router.put('/calendario/:registro', (req, res) => {
-    const { registro } = req.params;
-    const { título, fecha, hora, etiqueta, color, nota } = req.body;
-    userSchema
-        .updateOne({ _registro: registro }, { $set: { título, fecha, hora, etiqueta, color, nota } })
-        .then((data) => res.json(data))
-        .catch((error) => res.json({ message: error }));
-});
-// Eliminar usuario
-router.delete('/calendario/:registro', (req, res) => {
-    const { registro } = req.params;
-    userSchema
-        .deleteOne({ _registro: registro })
-        .then((data) => res.json(data))
-        .catch((error) => res.json({ message: error }));
-});
-
-
-module.exports = router
-*/
 const express = require('express');
 const router = express.Router();
-const biblioteca = require('../models/Biblioteca'); 
+const calendario = require('../models/Calendario'); 
 
-//Ruta para crear una biblioteca
-router.post('/bibliotecas', async (req, res) => {
+//Ruta para crear un calendario
+router.post('/calendarios', async (req, res) => {
     try {
       // Crear una nueva instancia del modelo con los datos del cuerpo de la petición
-      const newBiblioteca = new biblioteca(req.body);
+      const newCalendario = new calendario(req.body);
       // Guardar la nueva biblioteca en la base de datos
-      const savedBiblioteca = await newBiblioteca.save();
+      const savedCalendario = await newCalendario.save();
       // Enviar la biblioteca guardada como respuesta
-      res.status(201).json(savedBiblioteca);
+      res.status(201).json(savedCalendario);
     } catch (error) {
       // Manejar cualquier error
       res.status(500).json({ message: error.message });
     }
 });
 
-// Ruta para obtener todas las bibliotecas
-router.get('/bibliotecas', async (req, res) => {
+// Ruta para obtener todos los calendarios
+router.get('/calendarios', async (req, res) => {
   try {
-    const bibliotecas = await biblioteca.find();
-    res.json(bibliotecas);
+    const calendarios = await calendario.find();
+    res.json(calendarios);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-// Ruta para obtener una biblioteca por título
-router.get('/bibliotecas/titulo/:titulo', async (req, res) => {
+// Ruta para obtener un calendario por título
+router.get('/calendarios/titulo/:titulo', async (req, res) => {
     try {
-      const bibliotecas = await biblioteca.findOne({ titulo: req.params.titulo });
-      if (!biblioteca) {
-        return res.status(404).json({ message: 'Biblioteca no encontrada' });
+      const calendarios = await calendario.findOne({ titulo: req.params.titulo });
+      if (!calendario) {
+        return res.status(404).json({ message: 'Calendario no encontrado' });
       }
-      res.json(bibliotecas);
+      res.json(calendarios);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
 });
 
-// Ruta para actualizar una biblioteca por título
-router.put('/bibliotecas/titulo/:titulo', async (req, res) => {
+// Ruta para actualizar un calendario por título
+router.put('/calendarios/titulo/:titulo', async (req, res) => {
     try {
         // Extrae los campos del cuerpo de la solicitud
         const { titulo, 
-          fechaCreacion, 
-          fechaVencimiento, 
-          valorTotal, 
-          tipo, 
-          estado, 
-          formato } = req.body;  
-        // Actualiza la biblioteca con el título proporcionado
-        const bibliotecas = await biblioteca.updateOne(
-            // Filtro para identificar a la biblioteca
+          fecha, 
+          etiqueta, 
+          color, 
+          nota
+        } = req.body;  
+        // Actualiza el calendario con el título proporcionado
+        const calendarios = await calendario.updateOne(
+            // Filtro para identificar al calendario
             { titulo: req.params.titulo },
             // Campos a actualizar
             { $set: { titulo, 
-              fechaCreacion, 
-              fechaVencimiento, 
-              valorTotal, 
-              tipo, 
-              estado, 
-              formato 
+              fecha, 
+              etiqueta, 
+              color, 
+              nota
             }},
             { new: true } // Opción para devolver el documento actualizado
         );
-        if (!biblioteca) {
-            return res.status(404).json({ message: 'Biblioteca no encontrada' });
+        if (!calendario) {
+            return res.status(404).json({ message: 'Calendario no encontrado' });
           }
-          res.json(bibliotecas);
+          res.json(calendarios);
         } catch (error) {
           res.status(500).json({ message: error.message });
     }
 });
 
-// Ruta para eliminar una biblioteca por título
-router.delete('/bibliotecas/titulo/:titulo', async (req, res) => {
+// Ruta para eliminar un calendario por título
+router.delete('/calendarios/titulo/:titulo', async (req, res) => {
     try {
-      const bibliotecas = await biblioteca.deleteOne({ titulo: req.params.titulo });
-      if (!biblioteca) {
-        return res.status(404).json({ message: 'Biblioteca no encontrada' });
+      const calendarios = await calendario.deleteOne({ titulo: req.params.titulo });
+      if (!calendario) {
+        return res.status(404).json({ message: 'Calendario no encontrado' });
       }
-      res.json({ message: 'Biblioteca eliminada exitosamente' });
+      res.json({ message: 'Calendario eliminado exitosamente' });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
