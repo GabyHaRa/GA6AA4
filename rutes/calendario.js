@@ -31,7 +31,7 @@ router.get('/calendarios', async (req, res) => {
 router.get('/calendarios/titulo/:titulo', async (req, res) => {
     try {
       const calendarios = await calendario.findOne({ titulo: req.params.titulo });
-      if (!calendario) {
+      if (!calendarios) {
         return res.status(404).json({ message: 'Calendario no encontrado' });
       }
       res.json(calendarios);
@@ -63,7 +63,7 @@ router.put('/calendarios/titulo/:titulo', async (req, res) => {
             }},
             { new: true } // Opción para devolver el documento actualizado
         );
-        if (!calendario) {
+        if (!calendarios) {
             return res.status(404).json({ message: 'Calendario no encontrado' });
           }
           res.json(calendarios);
@@ -76,7 +76,7 @@ router.put('/calendarios/titulo/:titulo', async (req, res) => {
 router.delete('/calendarios/titulo/:titulo', async (req, res) => {
     try {
       const calendarios = await calendario.deleteOne({ titulo: req.params.titulo });
-      if (!calendario) {
+      if (!calendarios) {
         return res.status(404).json({ message: 'Calendario no encontrado' });
       }
       res.json({ message: 'Calendario eliminado exitosamente' });

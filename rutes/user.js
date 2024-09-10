@@ -27,7 +27,7 @@ router.get('/users', async (req, res) => {
 router.get('/users/identificacion/:identificacion', async (req, res) => {
     try {
       const users = await user.findOne({ identificacion: req.params.identificacion });
-      if (!user) {
+      if (!users) {
         return res.status(404).json({ message: 'Usuario no encontrado' });
       }
       res.json(users);
@@ -48,7 +48,7 @@ router.put('/users/identificacion/:identificacion', async (req, res) => {
             { $set: { nombre, apellido, identificacion, correoElectronico }}, // Campos a actualizar
             { new: true } // Opción para devolver el documento actualizado
         );
-        if (!user) {
+        if (!users) {
             return res.status(404).json({ message: 'Usuario no encontrado' });
           }
           res.json(users);
@@ -61,7 +61,7 @@ router.put('/users/identificacion/:identificacion', async (req, res) => {
 router.delete('/users/identificacion/:identificacion', async (req, res) => {
     try {
       const users = await user.deleteOne({ identificacion: req.params.identificacion });
-      if (!user) {
+      if (!users) {
         return res.status(404).json({ message: 'Usuario no encontrado' });
       }
       res.json({ message: 'Usuario eliminado exitosamente' });

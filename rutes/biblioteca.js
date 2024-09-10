@@ -31,7 +31,7 @@ router.get('/bibliotecas', async (req, res) => {
 router.get('/bibliotecas/titulo/:titulo', async (req, res) => {
     try {
       const bibliotecas = await biblioteca.findOne({ titulo: req.params.titulo });
-      if (!biblioteca) {
+      if (!bibliotecas) {
         return res.status(404).json({ message: 'Biblioteca no encontrada' });
       }
       res.json(bibliotecas);
@@ -66,7 +66,7 @@ router.put('/bibliotecas/titulo/:titulo', async (req, res) => {
             }},
             { new: true } // Opción para devolver el documento actualizado
         );
-        if (!biblioteca) {
+        if (!bibliotecas) {
             return res.status(404).json({ message: 'Biblioteca no encontrada' });
           }
           res.json(bibliotecas);
@@ -79,7 +79,7 @@ router.put('/bibliotecas/titulo/:titulo', async (req, res) => {
 router.delete('/bibliotecas/titulo/:titulo', async (req, res) => {
     try {
       const bibliotecas = await biblioteca.deleteOne({ titulo: req.params.titulo });
-      if (!biblioteca) {
+      if (!bibliotecas) {
         return res.status(404).json({ message: 'Biblioteca no encontrada' });
       }
       res.json({ message: 'Biblioteca eliminada exitosamente' });

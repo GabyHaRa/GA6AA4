@@ -41,6 +41,7 @@ module.exports = router
 const express = require('express');
 const router = express.Router();
 const puntaje = require('../models/Puntaje'); 
+const Puntaje = require('../models/Puntaje');
 
 //Ruta para crear un puntaje
 router.post('/puntajes', async (req, res) => {
@@ -57,37 +58,38 @@ router.post('/puntajes', async (req, res) => {
     }
 });
 
-// Ruta para obtener todos los calendarios
-router.get('/calendarios', async (req, res) => {
+// Ruta para obtener todos los puntajes
+router.get('/puntajes', async (req, res) => {
   try {
-    const calendarios = await calendario.find();
-    res.json(calendarios);
+    const puntajes = await puntaje.find();
+    res.json(puntajes);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-// Ruta para obtener un calendario por título
-router.get('/calendarios/titulo/:titulo', async (req, res) => {
+// Ruta para obtener un puntaje por id
+router.get('/puntajes/:id', async (req, res) => {
     try {
-      const calendarios = await calendario.findOne({ titulo: req.params.titulo });
-      if (!calendario) {
-        return res.status(404).json({ message: 'Calendario no encontrado' });
+      const puntajes = await puntaje.findById( req.params.id );
+      if (!puntajes) {
+        return res.status(404).json({ message: 'Puntaje no encontrado' });
       }
-      res.json(calendarios);
+      res.json(puntajes);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
 });
+  
 
-// Ruta para eliminar un calendario por título
-router.delete('/calendarios/titulo/:titulo', async (req, res) => {
+// Ruta para eliminar un puntaje por id
+router.delete('/puntajes/:id', async (req, res) => {
     try {
-      const calendarios = await calendario.deleteOne({ titulo: req.params.titulo });
-      if (!calendario) {
-        return res.status(404).json({ message: 'Calendario no encontrado' });
+      const puntajes = await puntaje.findByIdAndDelete( req.params.id );
+      if (!puntajes) {
+        return res.status(404).json({ message: 'Puntaje no encontrado' });
       }
-      res.json({ message: 'Calendario eliminado exitosamente' });
+      res.json({ message: 'Puntaje eliminado exitosamente' });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
