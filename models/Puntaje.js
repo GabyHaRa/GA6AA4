@@ -2,7 +2,9 @@ const mongoose = require("mongoose");
 const puntajeSchema = mongoose.Schema({
     puntaje: {
         type: Number,
-        required: true
+        required: true,
+        min: 0,
+        max: 5
     },
 })
 

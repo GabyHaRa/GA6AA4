@@ -73,3 +73,46 @@ Content-Type: application/json
 
 ###
 DELETE  http://localhost:9000/api/bibliotecas/titulo/Probando, probando
+
+###
+POST http://localhost:9000/api/calendarios HTTP/1.1
+content-type: application/json
+
+{
+    "titulo": "Entrega",
+    "fecha": "2025-01-31T24:00:00.000Z",
+    "etiqueta": "prueba",
+    "color": "0000ff",
+    "nota":"Espero funcione."
+}
+
+###
+GET http://localhost:9000/api/calendarios HTTP/1.1
+content-type: application/json
+
+###
+GET http://localhost:9000/api/calendarios/titulo/Entrega HTTP/1.1
+content-type: application/json
+
+###
+PUT http://localhost:9000/api/calendarios/titulo/Entrega
+Content-Type: application/json
+
+{
+    "titulo": "Vencimiento",
+    "fecha": "2025-01-31T24:00:00.000Z",
+    "etiqueta": "prueba",
+    "color": "0000ff",
+    "nota":"Espero funcione."
+}
+
+###
+DELETE  http://localhost:9000/api/calendarios/titulo/Vencimiento
+
+###
+POST http://localhost:9000/api/calendarios HTTP/1.1
+content-type: application/json
+
+{
+    "puntaje": "5"
+}

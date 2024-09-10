@@ -1,15 +1,11 @@
 const mongoose = require("mongoose");
 const calendarioSchema = mongoose.Schema({
-    título: {
+    titulo: {
         type: String,
         required: true
     },
     fecha: {
         type: Date,
-        required: true
-    },
-    hora: {
-        type: String,
         required: true
     },
     etiqueta: {
